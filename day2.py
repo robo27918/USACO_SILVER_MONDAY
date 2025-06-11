@@ -5,6 +5,21 @@ chickens = []
 cow_times = []
 pairs = 0
 used = set()
+
+
+def binary(value, list):
+    l, r = 0, len(list) - 1
+    while l <= r:
+        mid = (r-l+1)//2 + 1
+      
+        if list[mid] >= value:
+            r = mid-1
+        else:
+            l = mid+1
+    
+    return l
+
+
 for i in range(c):
     chickens.append(int(input()))
 
@@ -15,11 +30,11 @@ for _ in range(n):
 chickens.sort()
 cow_times.sort(key=lambda x: x[1])
 
-for x in chickens:
-    for y in cow_times:
-        if x <= y[1] and y not in used:
-            pairs += 1
-            used.add(y)
-            break
+for x in cow_times:
+    idx = binary(x[0], chickens)
+    if idx <= x[1]:
+        pairs += 1
+        chickens.pop(idx)
+    
 
 print(pairs)
